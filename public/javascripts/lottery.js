@@ -29,10 +29,10 @@ function Lottery(options){
   
   this.render = function(){
     if (this.parts.length == 0) {
-      this.userImg.find('img').attr('src', that.url+'/userDefault.png');
+      that.userImg.find('img').attr('src', that.url+'/userDefault.png');
     };
     that.updateNumb(this.parts.length,that.winner.length);
-    this.category.find('.text').html(that.cData[that.cData.length-1]);
+    that.category.find('.text').html(that.cData[that.cData.length-1]);
     var img = (that.parts.length > 0)? that.parts[Math.floor(Math.random()*that.parts.length)].img:that.url+'/userDefault.png';
     that.userImg.find('img').attr('src', img);
     btnStatus();
@@ -104,10 +104,10 @@ Lottery.prototype.play = function(){
       that.addWinner(index);
     });
     p.removeClass('spin');
-    that.playBtn.css("background-image","url("+that.url+"/btn_start.png)");
-    that.playing = "0";
+    this.playBtn.css("background-image","url("+that.url+"/btn_start.png)");
+    this.playing = "0";
   };
-  that.storage.setItem("lotteryStatus",that.playing);
+  this.storage.setItem("lotteryStatus",that.playing);
 }
 
 Lottery.prototype.playImg = function(){
@@ -118,42 +118,42 @@ Lottery.prototype.deleteWinner = function(i){
   var that = this;
   if (this.winner.length>0) {
     this.parts.push({
-      "uid":this.winner[i].uid,
-      "img":this.winner[i].img,
-      "name":this.winner[i].name
+      "uid":that.winner[i].uid,
+      "img":that.winner[i].img,
+      "name":that.winner[i].name
     });
     if (this.parts.length > 0) {
-      this.userImg.find('img').attr('src', this.winner[i].img);
+      this.userImg.find('img').attr('src', that.winner[i].img);
     }
     this.winner.splice(i,1);
-    this.storage.setItem("winner", JSON.stringify(this.winner));
+    this.storage.setItem("winner", JSON.stringify(that.winner));
     this.storage.setItem("parts",JSON.stringify(that.parts));
   } else{
     this.storage.setItem("winner", "[]");
   };
-  this.updateNumb(this.parts.length,this.winner.length);
+  this.updateNumb(that.parts.length,that.winner.length);
 }
 
 Lottery.prototype.addWinner = function (i){
   var that = this;
   if (this.parts.length>0) {
     this.winner.unshift({
-      "uid":this.parts[i].uid,
-      "rank":this.idx+1,
-      "name":this.parts[i].name,
-      "img":this.parts[i].img
+      "uid":that.parts[i].uid,
+      "rank":that.idx+1,
+      "name":that.parts[i].name,
+      "img":that.parts[i].img
     });
     this.parts.splice(i, 1);
     this.winner.sort(function (a,b){
       return a.rank-b.rank;
     });
-    this.renderList(this.winner);
+    this.renderList(that.winner);
     this.storage.setItem("winner", JSON.stringify(that.winner));
     this.storage.setItem("parts",JSON.stringify(that.parts));
   }else{
     this.storage.setItem("parts","[]");
   };
-  this.updateNumb(this.parts.length,this.winner.length);
+  this.updateNumb(that.parts.length,that.winner.length);
 }
 Lottery.prototype.delectList = function(){
   var that = this;
