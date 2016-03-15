@@ -1,0 +1,23 @@
+extends layout
+
+block content
+ div.lotteryWrapper#lotteryWrapper
+  div.lottery-l
+   div.joinNumb.total_numb 参加抽奖人数：
+    span.text-yl #{parts.length}
+   div.label-title 现场抽奖
+   div.lottery-img
+    div.usersImg
+     img(src='/images/userDefault.png')
+   div.lottery-category
+    div.text #{category[category.length-1]}
+    a.btn-l
+    a.btn-r
+   div.text-center
+    a.playBtn
+  div.lottery-r
+   div.joinNumb.winner_numb 获奖人数：
+    span.text-yl #{winner.length}
+   div.label-title 获奖名单
+   div.lottery-list
+    ul.list-unstyled
