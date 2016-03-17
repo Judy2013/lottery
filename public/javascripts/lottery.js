@@ -18,7 +18,7 @@ function Lottery(options){
   this.nextBtn = this.category.children('.btn-r');
   this.total = this.lottery.find('.total_numb').find('span');
   this.winnerNumb = this.lottery.find('.winner_numb').find('span');
-  this.winner = JSON.parse(that.storage.getItem("winner"));
+  this.winner = (JSON.parse(this.storage.getItem("winner")))?JSON.parse(this.storage.getItem("winner")):[];
   this.url = '../images';
   this.idx = settings.cData.length-1;
   this.runImg = null;
@@ -145,7 +145,7 @@ Lottery.prototype.addWinner = function (i){
     });
     this.parts.splice(i, 1);
     this.winner.sort(function (a,b){
-      return a.rank-b.rank;
+      return (a.rank == b.rank) ? b.t - a.t : a.rank - b.rank;
     });
     this.renderList(that.winner);
     this.storage.setItem("winner", JSON.stringify(that.winner));
